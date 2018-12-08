@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html  ng-app="notesApp">
+<head>
+    <title>Chapter 2</title>
+    <style type="text/css">
+        .pending, .done, .book{border: solid 1px #999}
+        .pending{background-color:red}
+        .done{background-color:green}
+    </style>
+</head>
+<body ng-controller="MainCtrl as ctrl">
+    <p> {{ctrl.message}} AngularJS  </p>
+    <button ng-click="ctrl.changeMessage()">Change Messgage</button>
+    <p>&nbsp;</p>
+    <div ng-repeat="note in ctrl.notes" ng-class="ctrl.getNoteClass(note.done)"><!--ng-class-->
+        <p>{{$index}}</p>
+        <p class="lable">{{note.label}}</p> 
+        <p class="assignee" ng-show="note.assignee" ng-bind="note.assignee"></p>
+        <p class="status" ng-bind={{note.done}}></p>
+
+        <!--ng-repeat helpers-->
+        <p>First Element: {{$first}}</p>
+        <p>Last Element: {{$last}}</p>
+        <p>Middle Element: {{$middle}}</p>
+        <p>Even Element: {{$even}}</p>
+        <p>Odd Element: {{$odd}}</p>
+    </div>
+    <h2>ng-repeat over object</h2>
+    <div ng-repeat="(author, book) in ctrl.books" class="book">
+        <p ng-bind="author"></p>
+        <p>{{book.title}}, {{book.pages}}pgs</p>
+    </div>
+  
+    <h2>Tracked By ID</h2>
+    <button ng-click="ctrl.changeNotes()">Change Notes</button> <br />
+    <div ng-repeat="note in ctrl.notes1" class="book">
+        {{note.$$hashKey}}
+        <p class="label">{{note.label}}</p>
+        <p class="author"ng-bind="note.done"></p>
+    </div>
+    <hr />
+    <div ng-repeat="note in ctrl.notes2 track by note.id" class="book">
+        {{note.$$hashKey}}
+        <p class="label">{{note.label}}</p>
+        <p class="author"ng-bind="note.done"></p>
+    </div>
+
+    <h2>ng-repeat over multiple HTML elements</h2>
+    <table border="1">
+        <tr ng-repeat-start="note in ctrl.notes">
+            <td>{{note.label}}</td>
+        </tr>
+        <tr ng-repeat-end>
+            <td>Done: {{note.done}}</td>
+        </tr>
+    </table>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script type="text/javascript">
+    angular.module('notesApp', [])
+           .controller('MainCtrl', [
+               function(){
+                   var self = this;
+                   self.message = 'Hello';
+                   self.changeMessage = function(){
+                       self.message = 'Good Bye';
+                   };
+
+                   self.notes = [
+                       {id: 1, label: 'First Note', done: false, assignee: 'Joseph'},
+                       {id: 2, label: 'Second Note', done: false},
+                       {id: 3, label: 'Third Note', done: true},
+                       {id: 4, label: 'Fouth Note', done: false, assignee: 'Maxwell'},
+                       {id: 5, label: 'Last Note', done: false},
+                   ];
+
+                   self.getNoteClass = function(status){
+                       return {
+                           done: status,
+                           pending: !status
+                       }
+                   }
+
+                   self.books = {
+                        shyam: {
+                            id: 1,
+                            title: 'JavaScript Doggy',
+                            pages: 190
+                        },
+                        Misko: {
+                            id: 3,
+                            title: 'AngularJS Lets Go',
+                            pages: 210
+                        },
+                        brad: {
+                            id: 2,
+                            title: 'Node.JS for real',
+                            done: 271
+                        }
+                   };
+
+                   var notes = [
+                        {
+                            id: 1,
+                            label: 'First Note',
+                            done: false,
+                            someRandom: 31431
+                        },
+                        {
+                            id: 2,
+                            label: 'Second Note',
+                            done: false
+                        },
+                        {
+                            id: 3,
+                            label: 'Finished Third Note',
+                            done: true
+                        }
+                    ];
+
+                    self.notes1 = angular.copy(notes);
+                    self.notes2 = angular.copy(notes);
+
+                    self.changeNotes = function(){
+                        notes = [
+                            {
+                                id: 1,
+                                label: 'Changed Note',
+                                done: false,
+                                someRandom: 4242
+                            },
+                            {
+                                id: 2,
+                                label: 'Second Note',
+                                done: false
+                            },
+                            {
+                                id: 3,
+                                label: 'Finished Third Note',
+                                done: true
+                           }
+                        ];
+
+                        self.notes1 = angular.copy(notes);
+                        self.notes2 = angular.copy(notes);
+                    }
+                }
+           ]);
+</script>
+</body>
+</html>
