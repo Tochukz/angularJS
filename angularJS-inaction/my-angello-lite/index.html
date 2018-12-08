@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html ng-app="Angello">
+<head>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.2/angular.min.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="app.css">
+
+	<title>My Angello Lite</title>
+</head>
+<body>
+    <div ng-controller="MainCtrl as main">
+        <div class="col-md-4"> 
+            <h2>Stories</h2>    
+            <story class="callout thumbnail" ng-repeat="story in main.stories" ng-click="main.setCurrentStory(story)"></story>
+        </div> <br  />
+        <a class="btn btn-primary" ng-click="main.createStory()">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>
+</body>
+</html>
