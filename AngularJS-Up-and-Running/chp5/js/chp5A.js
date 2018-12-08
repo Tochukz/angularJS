@@ -1,8 +1,8 @@
 /*
-This example demonstrates the need for services.
-We see that controller states have a very short life.
-This is because Controllers are created and destroyed all the time.
-The state contained in the controller will be reset when this is happens.
+* This example demonstrates the need for services.
+* We see that controller states have a very short life.
+* This is because Controllers are created and destroyed all the time.
+* The state contained in the controller will be reset when this is happens.
  */
 angular.module('notesApp', [])
        .controller('MainCtrl', ['$log',
