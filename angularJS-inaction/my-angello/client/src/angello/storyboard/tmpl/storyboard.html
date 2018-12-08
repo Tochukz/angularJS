@@ -1,0 +1,54 @@
+<html ng-app="Angello">
+<body ng-controller="StoryboardCtrl as storyboard">
+<div class="list-area" >
+    <div class="wrapper" >
+        <ul class="list" ng-repeart="status in ::storyboard.statuses">
+            <h2 class="status">{::status.name}</h2> <br />
+            <li userstory
+                ng-repeat="story in ::storyboard.stories | filter: {status : status.name}"
+                drag-container="story"
+                mime-type="application/x-angello-status"
+                class="story my-repeat-animation" 
+                ng-click="storyboard.setCurrentStory(story)">
+                <article class="{{story.type}}">
+                    <div>
+                        <button type="button" class="close" ng-click="storyboard.deleteStory(story.id)">x</button>
+                        <p class="title">{{story.title}}</p>
+                    </div>
+                    <div class="type-bar {{story.type}} "></div>
+                    <div>
+                        <p>{{story.description}}</p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="details">
+    <h3>Card Details</h3>
+    <form name="storyboard.detailsForm">
+        <div class="form-group">
+            <div class="control">
+                <label class="control-label" for="inputTitle">*Title</label>
+                <input ng-model="storyboard.editedStory.title" type="text" class="form-control" name="inputTtile" id="inputTitle" placeholder="Title" ng-minlength="3" ng-maxlength="30" ng-required="true" />
+            </div>            
+        </div>
+        <div class="form-group">
+            <div class="control">
+                <label class="control-label" for="reporter">*Reporter</label>
+                <select ng-model="storyboard.editedStory.reporter" ng-options="user.id as user.name for user in storyboard.users" ng-required="true" name="inputReporter" id="inputReporter">                 
+                    <option value=" ">Please select...</option>
+                </select>
+            </div>
+        </div>
+    </form> <hr />
+    <div ng-if="storyboard.currentStory">
+        <button ng-click="storyboard.updateCancel()" class="btn btn-default">Cancel</button>
+        <butoon ng-disable="!storyboard.detailsdForm.$valid" ng-click-"storyboard.updateStory()" class="btn pull-right btn-default">Update Story</butoon>
+    </div>
+    <div ng-if="!storyboard.currentStory">
+        <button class="btn pull-right btn-default" ng-click="storyboard.createStory()" ng-disabled="!storyboard.detailsForm.$valid">Create Story</button>
+    </div>
+</div>
+</body>
+</html>
