@@ -1,4 +1,4 @@
-/**
+/*
  * Defining a service using the provider method module.provider()
  * 
  */
