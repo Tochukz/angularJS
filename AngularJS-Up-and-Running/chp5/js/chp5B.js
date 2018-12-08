@@ -1,4 +1,4 @@
-/**
+/*
  * Injecting an angularJS built in service, $log.
  * $log.log() will write  to the console.
  */
