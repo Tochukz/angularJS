@@ -25,7 +25,7 @@ angular.module('notesApp', [])
 
                };
            }
-       ])
+       ]);
     //    .factory('ItemService', [
     //        function(){
     //            var items = [
