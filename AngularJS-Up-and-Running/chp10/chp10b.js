@@ -17,7 +17,9 @@ angular.module('resolveApp', ['ngRoute'])
                controller: ['$log', 'immediate', 'async', 
                     function($log, immediate, async){                    
                         $log.log('Immediate is ', immediate);
-                        $log.log('Server returned for async', async);
+                        $log.log('Server returned for async', async); 
+                        //This async variable is equivalent to the success response argument passed to the then() callback of a promise object.
+                        //i.e $http.get('/').then(function(reponse){}), response here is same as our async. 
                     }
                ]
            });
