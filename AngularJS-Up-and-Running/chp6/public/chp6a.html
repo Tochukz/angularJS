@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="notesApp">
+<head>
+    <title>Cahpter 6A</title>
+    <style>
+        .item {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body ng-controller="MainCtrl as mainCtrl">
+    <h1>Chpater 6 HTTP get</h1>
+    <div ng-repeat="todo in mainCtrl.items" class="items">
+        <div><span ng-bind="todo.label"></span></div>
+        <div>- by <span ng-bind="todo.author"></span></div>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+/*Making get request */
+    angular.module('notesApp', [])
+           .controller('MainCtrl', ['$http',
+               function($http){
+                   var self = this;
+                   self.items = [];
+                   $http.get('/api/note').then(
+                        function(response){
+                            self.items = response.data;
+                        }, 
+                        function(errResponse){
+                            console.error('Error while fetching notes');
+                        }
+                    );
+               }
+           ]);
+</script>
+</body>
+</html>

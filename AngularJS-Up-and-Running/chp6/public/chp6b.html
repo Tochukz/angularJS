@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html ng-app="noteApp">
+<head>
+    <title>Chpater 6 HTTP Post</title>
+    <style>
+        .item{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body ng-controller="MainCtrl as mainCtrl">
+    <h1>Hello Servers!</h1>
+    <div ng-repeat="todo in mainCtrl.items" class="item">
+        <div><span ng-bind="todo.label"></span></div>
+        <div>- by <span ng-bind="todo.author"></span></div>
+    </div>
+    <div>
+        <form name="addForm" ng-submit="mainCtrl.add()">
+            <input type="text" placeholder="Label" ng-model="mainCtrl.newTodo.label" required />
+            <input type="text" placeholder="Author" ng-model="mainCtrl.newTodo.author" required/>
+            <input type="submit" value="Add" ng-disabled="addForm.$invalid" />
+        </form>
+    </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+    angular.module('noteApp', [])
+           .controller('MainCtrl', ['$http',
+               function($http){
+                   var self = this;
+                   self.items = [];
+                   self.newTodo = {};
+                   var fetchTodos = function(){
+                       return  $http.get('/api/note').then(
+                                   function(response){
+                                       self.items = response.data;
+                                   },
+                                   function(errorResponse){
+                                       console.error('Error while fetching notes');
+                                   } 
+                               ); 
+                   };
+
+                   fetchTodos();
+
+                   self.add = function(){
+                       $http.post('/api/note', self.newTodo)
+                            .then(fetchTodos)
+                            .then(function(reponse){
+                                self.newTodo = {};
+                            });
+                   };
+                  
+               }
+           ]);
+
+/* 
+//Options and values for the config object of the $http service.
+
+var config = {
+    method: string,
+    url: string,
+    params: object,
+    data: string or object,
+    headers: object,
+    xsrfHeaderName: string,
+    xsrfCookieName: string,
+    transformRequest: function transform(data, headersGetter) or
+    an array of functions,
+    transformResponse: function transform(data, headersGetter) or
+    an array of functions,
+    cache: boolean or Cache object,
+    timeout: number,
+    withCredentials: boolean
+ }
+
+ $http(config);
+ */
+</script>
+</body>
+</html>
