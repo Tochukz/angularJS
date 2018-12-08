@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 8 Custom filters</title>
+</head>
+<body ng-app="filtersApp">
+<div ng-controller="FilterCtrl as ctrl">
+    <p>Start Time( Timestamp): {{ctrl.startTime}}</p> 
+    <p>Start Time (DateTime): {{ctrl.startTime | date:'medium'}}</p>
+    <p>Start Time (Our filter): {{ctrl.startTime | timeAgo}}</p>
+    <p>someTimeAgo: {{ctrl.someTimeAgo | date: 'short' }}</p>
+    <p>someTimeAgo (Our filter): {{ctrl.someTimeAgo | timeAgo}}</p>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+    angular.module('filtersApp', [])
+            .controller('FilterCtrl', [
+                function(){
+                    this.startTime = new Date().getTime();
+                    this.someTimeAgo = new Date().getTime() - (1000 * 60 * 60 * 4);
+                }
+            ]).filter('timeAgo', [
+                function(){
+                    var ONE_MINUTE = 1000 * 60;
+                    var ONE_HOUR = ONE_MINUTE * 60;
+                    var ONE_DAY = ONE_HOUR * 24;
+                    var ONE_MONTH = ONE_DAY * 30;
+
+                    return function(ts){
+                        var currentTime = new Date().getTime();
+                        var diff = currentTime - ts;
+                        if( diff < ONE_MINUTE){
+                            return 'seconds ago';
+                        }else if(diff < ONE_HOUR){
+                            return 'minutes ago';
+                        }else if(diff < ONE_DAY){
+                            return 'hours ago';
+                        }else if(diff < ONE_MONTH){
+                            return 'days ago'
+                        }else{
+                            return 'months ago';
+                        }
+                    }
+
+                }
+            ]);
+/*
+If you want to add optional arguments to your custom filter then add it as argument to the fuction returned in the filter defination
+ angular.filter('customFilter', [
+     return function(ts, arg1, arg2, arg3){
+         //
+     }
+ ])
+   
+After that you can pass the value for thhe argument in the HTML
+    {{someInput | customFilter: arg1 : arg2 : arg3}}
+*/
+
+/**
+BEST Practices
+1. Filters used in the UI/View is re-evaluated everytime a digest cycle happens.
+2. So avoid things link DOM manipulation, asynchronous call, and other slow activities when you write a custom filter. 
+3. For large and commplex array and data structure, use filters directly in  the controller or service. Inject the filter
+   into your controller and service and trigger the filter function as needed. 
+*/
+</script>
+</body>
+</html>

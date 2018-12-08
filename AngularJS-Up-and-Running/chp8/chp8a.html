@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chapter 8 | Filter in action</title>
+</head>
+<body ng-app="filtersApp">
+ <div ng-controller="FilterCtrl as ctrl">
+     <p>Amount as a number: {{ctrl.amount | number}}</p>
+     <p>Total cost as a currency: {{ctrl.totalCost | currency }}</p>
+     <p>Total cost in INR: {{ctrl.totalCost | currency: 'INR' }}</p>
+     <p>Amount - INR Currency: {{ctrl.amount | currency: '&#163'}}</p>
+     <p>Shouting the name: {{ctrl.name | uppercase}}</p>
+     <p>Whispering the name {{ctrl.name | lowercase }}</p>
+     <p>Start Time: {{ctrl.startTime | date: 'medium' }}</p>
+     <p>Custom Date filter: {{ctrl.startTime | date: 'M/dd, yyyy' }}</p>
+     <p>Trucated uppercase name: {{ctrl.name | uppercase | limitTo:5 }}</p>
+     <p>Reverse truncate: {{ctrl.name | limitTo:-5 }}</p>
+     <p>Decimal Number: {{ctrl.decimalNumber | number:2 }}</p>
+     <p>Person JSON Object: </p>
+     <pre>{{ctrl.person | json }}</pre>
+     <p>People Array: </p>
+     <pre>{{ctrl.people}}</pre>
+     <p>Trucate Array:</p> 
+     <pre>{{ctrl.people | limitTo:3}}</pre>
+     <p>Reverse truncate: </p>
+     <pre>{{ctrl.people | limitTo:-3}}</pre>
+ </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+angular.module('filtersApp', [])
+       .controller('FilterCtrl', [
+            function(){
+                this.amount = 54000;
+                this.totalCost = 67000;
+                this.name = 'Tochukwu';
+                this.startTime = new Date().getTime();
+                this.decimalNumber = 59000.56987
+                this.person = { name: 'Tochukz', job: 'Senior Dev'}
+                this.people = ['Chichi', 'Uche', 'Chima', 'Emeka', 'Yusuf'];
+            }
+       ])            
+</script>
+</body>
+</html>
