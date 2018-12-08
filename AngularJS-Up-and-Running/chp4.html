@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html ng-app="notesApp">
+<head>
+    <title>Chpater 4</title>
+    <style>
+        .username.ng-valid{
+            background: green;
+        }
+        .username.ng-dirty.ng-invalid-required{
+            background: red;
+        }
+        .username.ng-dirty.ng-invalid-minlength{
+            background: lightpink;
+        }
+        .thumbnail{
+            border:solid #999 1px;
+        }
+    </style>
+</head>
+<body ng-controller="MainCtrl as ctrl">
+<form ng-submit="ctrl.submit()" name="myForm">
+    <p>
+        <input type="text" name="uname" ng-model="ctrl.user.username" required ng-minlength="6" placeholder="username" class="username"/>
+        <span ng-show="myForm.uname.$error.required">Username is required. </span>
+        <span ng-show="myForm.uname.$error.minlength">Usrname must be more then 5 characters. </span>
+        <span ng-show="myForm.uname.$invalid">Your username is invalid.</span>
+    </p>
+    <p>
+        <input type="password" name="pwd" ng-model="ctrl.user.password" required ng-minlength="8" placeholder="password" />
+        <span ng-show="myForm.pwd.$error.minlength">Password must be 8 charaters or more.</span>
+    </p>
+    <!--If the input value is invalid AngularJS will return undefined for the value -->
+    <ng-form name="profile">
+        <p>
+            <input type="text" name="firstname" ng-model="ctrl.user.profile.firstname" placeholder="First Name" required />
+            <span ng-show="profile.firstname.$error.required">Please enter your first name</span>
+        </p>
+        <p><input type="text" name="middlename" ng-model="ctrl.user.profile.middlename" placeholder="Middle Name" required /></p>
+        <p>
+            <input type="text" name="lastname" ng-model="ctrl.user.profile.lastname" placeholder="Last Name" required ng-minlength="2"/>
+            <span ng-show="profile.lastname.$error.minlength">Your last name can not be less than 2 charaters</span>
+        </p>
+        <p><input type="date" name="dob" ng-model="ctrl.user.profile.dob" placeholder="Date of Birth" /></p>
+    </ng-form>
+    <span ng-show="myForm.profile.$invalid">Please fill out the profile information</span>
+    <p>Worker: <input type="checkbox" ng-model="ctrl.user.worker" /></p>
+    <p>Agree: <input type="checkbox" ng-model="ctrl.user.agree" ng-true-value="Yes" ng-false-value="No" /></p>
+    <h2>What are your favourite sports?</h2>
+    <div ng-repeat="sport in ctrl.sports" class="thumbnail">
+        <p>With binding</p>
+        <p><input type="checkbox" ng-true-value="YES" ng-false-value="NO" ng-model="sport.selected" /></p>
+        <p>Using ng-checked</p>
+        <p><input type="checkbox" ng-checked="sport.selected === 'YES'"/></p>
+        <p>Current State: {{sport.selected}}</p>
+    </div>
+    <!--Use ng-check for one-way data binding for checkboxes-->
+
+    <div ng-init="user.gender = 'female'">
+        <p>Male: <input type="radio" name="gender" ng-model="user.gender" value="male" /></p>
+        <p>Female: <input type="radio" name="gender" ng-model="user.gener" value="female" /></p>
+        <p>Other: <input type="radio" name="gender" ng-model="user.gender" ng-value="'ng expression here'" /></p>
+    </div>
+    <div ng-init="location='India'">
+        Location: 
+        <select ng-model="location">
+            <option value="USA">USA</option>
+            <option value="India">India</option>
+            <option value="Others">Others</option>
+        </select>
+    </div>
+
+    <h2>ng-options</h2>
+    <div>
+        Country: 
+        <select ng-model="ctrl.selectedCountryId" ng-options="country.id as country.label for country in ctrl.countries"></select>
+        <p>Selected Country ID: {{ctrl.selectedCountryId}}</p>
+    </div>
+    <div>
+        <select ng-model="ctrl.selectedCountry" ng-options="country.label for country in ctrl.countries"></select>
+        <p>Selected Country: {{ctrl.selectedCountry.label}}</p>
+    </div>
+    
+    <p>
+        <button ng-click="ctrl.change()" type="button">Change Values</button>
+        <input type ="submit" value="Submit" ng-disable="myForm.$invalid"/>
+    </p>
+</form>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script>
+    angular.module('notesApp', [])
+           .controller('MainCtrl', [
+               function(){
+                   self = this;
+                   self.change = function(){
+                       self.user.username = 'changed';
+                       self.user.password = 'pass';
+                   };
+
+                   self.submit = function(){
+                       var user = self.user;
+                       console.log(user);
+                       //console.log(`User change username to ${user.username} and password to ${user.password}`);
+                   }
+
+                   self.sports = [
+                       {label: 'Basketball', selected: 'YES'},
+                       {label: 'Cricket', selected: 'NO'},
+                       {label: 'Soccer', selected: 'NO'},
+                       {label: 'Swimming', selected: 'YES'}
+                   ];
+
+                   self.countries = [
+                       {label: 'USA', id: 1},
+                       {label: 'India', id: 2},
+                       {label: 'Other', id: 3}
+                   ];
+                   self.selectedCountryId = 2;
+                   self.selectedCountry = self.countries[1];
+               }
+           ]);
+</script>
+</body>
+</html>
