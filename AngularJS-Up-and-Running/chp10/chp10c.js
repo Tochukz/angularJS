@@ -11,5 +11,5 @@ angular.module('routingApp', ['ngRoute'])
                    this.qStr = $routeParams.q;
                }],
                controllerAs: 'myCtrl'
-           })
+           });
        }]);
