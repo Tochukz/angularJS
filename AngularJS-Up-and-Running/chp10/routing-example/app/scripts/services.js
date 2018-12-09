@@ -1,5 +1,5 @@
-angular.module('fifaApp')
-       .factory('fifaService', ['$http',
+angular.module('FifaApp')
+       .factory('FifaService', ['$http',
             function($http){
                 return { 
                    getTeams: function(){
@@ -8,7 +8,7 @@ angular.module('fifaApp')
                    getTeamDetails: function(code){
                        return $http.get('/api/team/' + code);
                    }
-                }
+                };
             }
        ]).factory('UserService', ['$http', 
             function($http){

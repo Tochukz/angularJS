@@ -1,4 +1,4 @@
-angular.module('fifaApp')
+angular.module('FifaApp')
        .controller('MainCtrl', ['UserService', 
            function(UserService){
                var self = this;
@@ -29,8 +29,8 @@ angular.module('fifaApp')
                         function(error){
                             self.errorMessage = error.data.msg;
                         }
-                    )
-                }
+                    );
+                };
             }
         ]).controller('TeamDetailsCtrl', ['$location', '$routeParams', 'FifaService',
             function($location, $routeParams, FifaService){
@@ -43,6 +43,6 @@ angular.module('fifaApp')
                     function(error){
                         $location.path('/login');
                     }
-                )
+                );
             }
         ]);
