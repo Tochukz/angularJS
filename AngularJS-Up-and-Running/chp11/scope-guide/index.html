@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Directive Demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body class="jumbotron container" ng-app="DirectiveDemo">
+    <div ng-controller="MainCtrl as ctrl">
+        <h3>List of Sale Items.</h3>
+        <div ng-repeat="it in ctrl.items">
+            <item-widget item="it" promo="Christmas Sale" on-select="ctrl.onItemSelect(selectedItem)"></item-widget>
+        </div>
+    </div>
+</body>
+<script src="http://code.angularjs.org/1.2.16/angular.js"></script>
+<script src="app.js"></script>
+<script src="controller.js"></script>
+<script src="directive.js"></script>
+</html>
