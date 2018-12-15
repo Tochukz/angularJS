@@ -4,11 +4,20 @@ angular.module('stockMarketApp')
                 templateUrl: 'stock.html',
                 restrict: 'AE',
                 scope: {
-                    stockData: '=stockData'
+                    stockData: '=',
+                    stockTitle:'@',
+                    whenSelect:'&'
                 },
                 link: function($scope, $element, $attrs){
                     $scope.getChange = function(stock) {
                         return Math.ceil(((stock.price - stock.previous)/ stock.previous) *100 );
+                    };
+                    $scope.onSelect = function(){
+                        $scope.whenSelect({
+                            stockName: $scope.stockData.name,
+                            stockPrice: $scope.stockData.price,
+                            stockPrevious: $scope.stockData.previous
+                        });
                     };
                 }
             };

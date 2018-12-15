@@ -9,4 +9,8 @@ angular.module('stockMarketApp', [])
            ];
 
            self.stockTemplate = 'stock.html';
+
+           self.onStockSelect = function(price, name) {
+               console.log('Select Price: ', price, 'Name: ', name);
+           };
        }]);

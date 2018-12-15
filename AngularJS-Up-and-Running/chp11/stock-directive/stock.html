@@ -1,5 +1,6 @@
 <div class="stock-dash" style="border:solid silver 1px; margin: 2px">
-    <strong>Name:</strong> <span class="stock-name"  ng-bind="stockData.name"></span> <br />
-    <strong>Price:</strong> <span class="stock-price" ng-bind="stockData.price | currency"></span> <br />
-    <strong>Percentage Change: </strong><span class="stock-change" ng-bind="getChange(stockData) + '%'"></span> <br />
+    <p><strong>Name:</strong> <span class="stock-name"  ng-bind="stockTitle"></span> </p>
+    <p><strong>Price:</strong> <span class="stock-price" ng-bind="stockData.price | currency"></span> </p>
+    <p><strong>Percentage Change:</strong><span class="stock-change" ng-bind="getChange(stockData) + '%'"></span> </p>
+    <button ng-click="onSelect()">Select me</button>
 </div>
