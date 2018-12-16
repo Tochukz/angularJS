@@ -1,0 +1,8 @@
+<div class="stock-dash" style="border:solid green 1px; margin:5px; padding:3px">
+    <p ng-transclude></p>
+    <p><strong>Price:</strong>  <span class="stock-price" ng-bind="stockData.price | currency"></span></p>
+    <p><strong>Percentage Change:</strong>  <span class="stock-change" ng-bind="getChnage(stockData) + '%'"></span></p>
+</div>
+<!--
+  The transcluded content still has access to the parent controller and its content, while the directive HTML has an isolated scope (or a new scope, as the case might be).
+-->
