@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Advanced Transclusion</title>
+</head>
+<body ng-app="StockMarketApp">
+    <div ng-controller="MainCtrl as mainCtrl">
+        <h3>List of Stocks</h3>
+        <div simple-stock-repeat="mainCtrl.stocks">
+            We found {{stock.name}} at {{currentIndex}}
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="directive.js"></script>
+</body>
+</html>
