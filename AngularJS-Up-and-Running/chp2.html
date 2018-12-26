@@ -44,6 +44,10 @@
         <p class="label">{{note.label}}</p>
         <p class="author"ng-bind="note.done"></p>
     </div>
+    <!--
+        We use the track-by expression to optimize DOM manipulation in our application. This would generally be on the IDs of objects returned from our databases, 
+        to ensure AngularJS reuses DOM elements even if we fetch the data multiple times from the server. See Page 30
+    -->
 
     <h2>ng-repeat over multiple HTML elements</h2>
     <table border="1">
